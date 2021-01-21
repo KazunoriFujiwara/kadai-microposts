@@ -2,6 +2,16 @@ class MicropostsController < ApplicationController
   before_action :require_user_logged_in
   before_action :correct_user, only: [:destroy]
   
+  def index
+    @microposts = Micropost.all.includes(:user).recent
+  end
+  
+  def show
+    @message = "Hello World!"
+    @favorite = current_user.favorites.find_by(micropost_id: @micropost.id)
+    @favorites= @micropost.favorite_users
+  end
+
   def create
     @micropost = current_user.microposts.build(micropost_params)
     if @micropost.save
@@ -19,7 +29,7 @@ class MicropostsController < ApplicationController
     flash[:success] = 'メッセージを削除しました。'
     redirect_back(fallback_location: root_path)
   end
-  
+
   private
 
   def micropost_params

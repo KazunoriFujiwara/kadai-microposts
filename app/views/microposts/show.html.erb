@@ -1,0 +1,19 @@
+
+  <% if @favorite.present? %>
+      <h2>この投稿のお気に入りを解除しますか？<h2>
+      <div class="like-btn">
+        <%= link_to "解除する", favorite_path(id: @favorite.id), method: :delete, class: "btn btn-danger" %>
+      </div>
+  <% else %>
+      <h2>この投稿のお気に入りに登録しますか？<h2>
+      <div class="like-btn">
+        <%= link_to "登録をする", favorites_path(micropost_id: @micropost.id), method: :post, class:"btn btn-primary like-btn" %>
+      </div>
+  <% end %>
+
+&nbsp
+<h1>この投稿をお気に入りしたユーザー一覧</h1>
+  <% @favorites.each do |favorite| %>
+  <%= image_tag(favorite.user_image,class: "member-img") if favorite.user_image && favorite.user_image.url %>
+     <%= favorite.name %>
+  <% end %>
