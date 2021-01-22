@@ -28,7 +28,7 @@ class UsersController < ApplicationController
   end
   
   def likes
-    @user = current_user
+    @user = User.find(params[:id])
     @microposts = @user.likes.includes(:user).order(created_at: :desc)
     counts(@user)
   end
